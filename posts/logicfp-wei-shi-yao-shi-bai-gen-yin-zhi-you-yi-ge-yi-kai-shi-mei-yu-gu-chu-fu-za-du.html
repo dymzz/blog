@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogicFP 为什么失败：根因只有一个——一开始没预估出复杂度 - 我的博客</title>
+    <meta name="description" content="vibecoding 的应用。">
+    <meta property="og:title" content="LogicFP 为什么失败：根因只有一个——一开始没预估出复杂度 - 我的博客">
+    <meta property="og:description" content="vibecoding 的应用。">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="https://dymzz.github.io/blog/theme/css/main.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳到主要内容</a>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="https://dymzz.github.io/blog/" class="brand-link">
+                    <span class="brand-icon" aria-hidden="true">&#9998;</span>
+                    <span class="brand-text">我的博客</span>
+                </a>
+                <span class="site-subtitle">记录技术与生活</span>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" aria-label="切换深色模式" title="切换深色模式">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <nav class="site-nav" aria-label="主导航">
+                    <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul class="nav-list">
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="site-main">
+        <div class="container">
+<article class="article-detail">
+    <header class="article-header">
+        <div class="article-header-meta">
+            <time datetime="2026-04-10T00:00:00+08:00">2026年04月10日</time>
+            <a href="https://dymzz.github.io/blog/category/ji-zhu.html" class="post-category">技术</a>
+        </div>
+        <h1 class="article-title">LogicFP 为什么失败：根因只有一个——一开始没预估出复杂度</h1>
+        <div class="article-tags">
+            <a href="https://dymzz.github.io/blog/tag/python.html" class="tag">Python</a>
+            <a href="https://dymzz.github.io/blog/tag/vibecoding.html" class="tag">vibecoding</a>
+            <a href="https://dymzz.github.io/blog/tag/bian-cheng.html" class="tag">编程</a>
+        </div>
+    </header>
+
+
+    <div class="article-content">
+        <h1 id="logicfp">LogicFP 为什么失败：根因只有一个——一开始没预估出复杂度<a class="headerlink" href="#logicfp" title="Permanent link">&para;</a></h1>
+<p>我后来回头看 LogicFP，这个项目的失败原因其实可以收成一个，而不是很多个：</p>
+<blockquote>
+<p><strong>一开始没有预估出这条路线的真实复杂度。</strong></p>
+</blockquote>
+<p>后面看到的那些问题——架构膨胀、插件化过早、契约冻结过多、评测体系越来越重、产品边界越来越模糊——都不是独立原因。<br>
+它们更像是同一个根因的连续展开：</p>
+<p><strong>因为低估了复杂度，所以误以为这条路还能继续往前补；补着补着，项目就被复杂度本身吞掉了。</strong></p>
+<hr>
+<h2 id="_1">一、不是做不出来，而是一开始就走进了高复杂度方向<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>LogicFP 最初想做的事，其实很合理：</p>
+<ul>
+<li>给 LLM 调用链加保护层</li>
+<li>降低幻觉和错误引用</li>
+<li>做风险判断、回退、拒绝、降级</li>
+<li>让模型输出更可解释、更可控、更稳定</li>
+</ul>
+<p>这些目标本身都没问题。<br>
+问题不在“方向错了”，而在于：</p>
+<blockquote>
+<p><strong>这个方向天然就不是一个低复杂度方向。</strong></p>
+</blockquote>
+<p>它不是那种“先做一个小工具，再慢慢长大”的路线。<br>
+它从一开始，就很容易滑向下面这些东西：</p>
+<ul>
+<li>评分层</li>
+<li>策略层</li>
+<li>路由层</li>
+<li>状态机</li>
+<li>fallback 机制</li>
+<li>原因码 / 触发码</li>
+<li>契约冻结</li>
+<li>benchmark</li>
+<li>regression</li>
+<li>plugin 边界</li>
+<li>生命周期管理</li>
+</ul>
+<p>也就是说，这不是一条“做一点看看”的路。<br>
+它是一条只要开做，就会不断把你往系统化、平台化、抽象化方向拉的路。</p>
+<p>而我一开始没有足够清楚地意识到这点。</p>
+<hr>
+<h2 id="_2">二、真正的问题不是复杂，而是“没看见复杂”<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>复杂本身不是问题。<br>
+很多值得做的工程，本来就复杂。</p>
+<p>真正的问题是：</p>
+<blockquote>
+<p><strong>项目一开始，并没有把复杂度当成需要先确认的事情。</strong></p>
+</blockquote>
+<p>于是后面会发生一种很典型的偏差：</p>
+<h3 id="_3">第一步：先觉得问题真实，所以值得做<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>这一步没错。<br>
+LLM 工程里这些问题确实存在：</p>
+<ul>
+<li>模型会漂</li>
+<li>回答会错</li>
+<li>引用会假</li>
+<li>接口会抖</li>
+<li>fallback 会混乱</li>
+<li>上下游错误会被连锁放大</li>
+</ul>
+<p>所以很自然会得到一个判断：</p>
+<p><strong>“这值得做，而且最好系统化地做。”</strong></p>
+<h3 id="_4">第二步：因为问题真实，就误以为架构扩展也是合理的<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>这一步开始偏了。</p>
+<p>因为问题是真的，你很容易接受接下来的每一个扩展：</p>
+<ul>
+<li>既然要判断风险，那就加 scoring</li>
+<li>既然有评分，那就加 policy</li>
+<li>既然 policy 要落地，那就加 strategy</li>
+<li>既然会恢复失败，那就加 FSM</li>
+<li>既然要可审计，那就加 reason / trigger / evidence</li>
+<li>既然要长期维护，那就加 contract freeze</li>
+<li>既然未来可能扩展，那就加 plugin hook</li>
+<li>既然要证明可靠，那就加 benchmark / regression</li>
+</ul>
+<p>每一层单看都合理。<br>
+但它们叠起来后，会形成一个事实：</p>
+<blockquote>
+<p><strong>项目的复杂度，不是线性增长，而是结构性增长。</strong></p>
+</blockquote>
+<h3 id="_5">第三步：复杂度已经变高了，但体感上还以为只是“再补一点”<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>这是最危险的阶段。</p>
+<p>因为每一步都能说通，所以人很难停下来。<br>
+你会觉得自己不是在偏航，只是在“补完整”。</p>
+<p>但真实情况是：</p>
+<blockquote>
+<p>你不是在补完整，你是在持续进入一个一开始没有估清楚的高复杂度系统。</p>
+</blockquote>
+<hr>
+<h2 id="_6">三、后面所有问题，其实都是这个根因的外溢<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>如果接受“根因是低估复杂度”，那后面很多问题就都能串起来了。</p>
+<hr>
+<h2 id="_7">四、为什么会架构膨胀<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>不是因为故意想把项目做大。<br>
+而是因为当你没有预估这条路线会长出多少结构时，你会默认：</p>
+<blockquote>
+<p>“再加这一层，应该还在可控范围内。”</p>
+</blockquote>
+<p>但这种判断会不断重复失效。</p>
+<p>因为 LogicFP 这种方向，不是加一个模块那么简单。<br>
+它的特点是：<strong>模块之间强耦合。</strong></p>
+<p>你加一个 policy，不只是多一个文件。<br>
+它意味着：</p>
+<ul>
+<li>要和 scoring 对齐</li>
+<li>要和 strategy 对齐</li>
+<li>要和输出契约对齐</li>
+<li>要和 benchmark 预期对齐</li>
+</ul>
+<p>你加一个 fallback 机制，也不是多一个分支。<br>
+它意味着：</p>
+<ul>
+<li>要定义什么时候触发</li>
+<li>要定义触发后输出什么</li>
+<li>要定义如何恢复</li>
+<li>要定义恢复失败怎么办</li>
+<li>要定义这套行为怎么测试</li>
+</ul>
+<p>所以所谓“架构膨胀”，本质上不是设计欲望太强。<br>
+而是：</p>
+<blockquote>
+<p><strong>一开始没意识到，这条路上的每个小补丁，都会把系统复杂度整体抬高。</strong></p>
+</blockquote>
+<hr>
+<h2 id="_8">五、为什么会过早插件化<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>插件化通常不是第一天就想做的。<br>
+它往往发生在你做到一半时，开始觉得：</p>
+<ul>
+<li>以后可能有不同扩展点</li>
+<li>以后可能要做不同能力包</li>
+<li>以后可能要做隔离</li>
+<li>以后可能要支持生态</li>
+</ul>
+<p>听起来都对。<br>
+但这里有一个前提：</p>
+<blockquote>
+<p>只有当核心问题已经稳定收口，插件化才是扩展。<br>
+否则，插件化只是把未收口的复杂度制度化。</p>
+</blockquote>
+<p>LogicFP 的问题就在这：</p>
+<p>核心价值还没压到足够窄，<br>
+但外围扩展机制已经开始长。</p>
+<p>这不是“想太远”那么简单。<br>
+它更准确的说法应该是：</p>
+<blockquote>
+<p><strong>因为没有预估复杂度，所以没有及时意识到：现在最该做的是砍结构，而不是留扩展位。</strong></p>
+</blockquote>
+<hr>
+<h2 id="_9">六、为什么产品边界会越来越模糊<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>这也是同一个原因。</p>
+<p>如果一开始你知道这条路复杂度极高，那你会本能地收缩问题，逼自己只回答一件事：</p>
+<ul>
+<li>到底只解决什么？</li>
+<li>不解决什么？</li>
+<li>谁必须用？</li>
+<li>谁其实没必要用？</li>
+</ul>
+<p>但如果没预估出来，你就更容易接受下面这种扩张：</p>
+<ul>
+<li>FAQ 也能用</li>
+<li>检索问答也能用</li>
+<li>引用网关也能用</li>
+<li>provider fallback 也能用</li>
+<li>风险控制也能用</li>
+<li>多模型路由也能用</li>
+<li>高风险行业也能延展</li>
+<li>以后还能长成通用 middleware</li>
+</ul>
+<p>这些话单独都不一定错。<br>
+问题在于它们一起出现时，项目就开始失去锋利边界。</p>
+<p>于是项目会进入一种非常危险的状态：</p>
+<blockquote>
+<p>技术上越来越完整，产品上越来越不清楚。</p>
+</blockquote>
+<p>而这往往不是因为产品思考不够，<br>
+而是因为：</p>
+<p><strong>当你没预估复杂度时，你也往往没能及时预估“必须收窄边界”的必要性。</strong></p>
+<hr>
+<h2 id="_10">七、为什么会高估“别人愿意接入复杂系统”<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>这也是低估复杂度带来的直接后果。</p>
+<p>当维护者自己一路跟着系统成长时，很容易逐渐接受这些概念：</p>
+<ul>
+<li>阈值</li>
+<li>风险等级</li>
+<li>策略层</li>
+<li>reason / trigger</li>
+<li>benchmark 口径</li>
+<li>plugin contract</li>
+<li>生命周期状态</li>
+</ul>
+<p>因为你天天在看，所以会形成一种错觉：</p>
+<blockquote>
+<p>这些东西虽然多，但都是合理的，别人也应该能接受。</p>
+</blockquote>
+<p>但对外部使用者来说，他们只会问几个很现实的问题：</p>
+<ul>
+<li>接进来麻不麻烦？</li>
+<li>配置多不多？</li>
+<li>默认能不能跑？</li>
+<li>出错好不好查？</li>
+<li>比我自己写几条规则强多少？</li>
+</ul>
+<p>如果这些问题答不出明显优势，系统再完整也没用。</p>
+<p>这说明什么？</p>
+<p>说明项目在设计时，默认了一种并不存在的使用者耐心。<br>
+而这种误判，本质上还是来自：</p>
+<blockquote>
+<p><strong>没有在一开始把复杂度当成首要约束。</strong></p>
+</blockquote>
+<hr>
+<h2 id="_11">八、为什么会越做越像“体系”，却越来越难落地<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>因为复杂度一旦没被前置识别，后面的工程动作就会自动往“体系化补全”滑。</p>
+<p>你会很自然地做这些事：</p>
+<ul>
+<li>补更多规则</li>
+<li>补更多异常路径</li>
+<li>补更多测试</li>
+<li>补更多层级</li>
+<li>补更多对齐关系</li>
+<li>补未来扩展接口</li>
+</ul>
+<p>每一步都能增强“体系完整性”。<br>
+但这不等于增强“落地能力”。</p>
+<p>很多项目死就死在这里：</p>
+<blockquote>
+<p>它不是没有进展。<br>
+它是进展几乎都发生在体系内部，而不是发生在落地闭环上。</p>
+</blockquote>
+<p>LogicFP 给我的最大教训之一就是：</p>
+<p><strong>一个项目越复杂，越不能靠“内部越来越完整”来判断自己是不是在前进。</strong></p>
+<hr>
+<h2 id="_12">九、如果把失败原因只写一句话，我会怎么写<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>我现在会这样写：</p>
+<blockquote>
+<p>LogicFP 的失败，不是因为目标没价值，也不是因为技术做不到，而是因为项目在起点没有识别出这是一条高复杂度路线，于是错误地把后续不断增加的设计，当成了正常演进，最终让复杂度超过了项目可收敛范围。</p>
+</blockquote>
+<p>这句话基本就够了。</p>
+<p>其他那些看起来很具体的问题：</p>
+<ul>
+<li>平台化过早</li>
+<li>插件化过早</li>
+<li>契约冻结过早</li>
+<li>评测体系过重</li>
+<li>架构抽象过多</li>
+<li>产品边界模糊</li>
+<li>接入成本偏高</li>
+</ul>
+<p>都只是这句话的展开版本。</p>
+<hr>
+<h2 id="_13">十、如果重来一次，第一件事不是设计，而是做复杂度预判<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>如果重来，我第一步不会再问：</p>
+<ul>
+<li>这个架构怎么分层？</li>
+<li>policy / strategy 怎么拆？</li>
+<li>plugin contract 怎么定？</li>
+<li>benchmark 怎么设计？</li>
+</ul>
+<p>我会先问更前面的问题：</p>
+<h3 id="1">1. 这个问题是不是天然高复杂度问题？<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>如果是，就不能按“先做一点看看”的心态进入。<br>
+要先确认自己有没有能力、时间和场景把它收住。</p>
+<h3 id="2">2. 这条路一旦开始，会自动长出哪些结构？<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>不是看今天要写几个文件，<br>
+而是看它 3 步以后、5 步以后、10 步以后一定会要求你补什么。</p>
+<h3 id="3">3. 有没有更小、更硬、更低复杂度的切法？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>如果有，就先切那个。<br>
+哪怕它不优雅、不宏大，也先做那个。</p>
+<h3 id="4">4. 如果不能证明别人离不开，就不要先按平台设计<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p>平台不是设计起点，<br>
+平台只能是被需求反复逼出来的结果。</p>
+<hr>
+<h2 id="_14">十一、真正该吸取的，不是“以后别做复杂系统”<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>我从 LogicFP 学到的，不是“复杂系统都不要做”。<br>
+那太简单了，也没价值。</p>
+<p>真正该吸取的是：</p>
+<blockquote>
+<p><strong>复杂系统可以做，但必须先知道自己在做复杂系统。</strong></p>
+</blockquote>
+<p>也就是说：</p>
+<ul>
+<li>复杂不是原罪</li>
+<li>低估复杂才是</li>
+<li>结构不是问题</li>
+<li>没看见结构会怎么自我增殖，才是问题</li>
+<li>平台化不是错误</li>
+<li>在价值还没打透前就平台化，才是错误</li>
+</ul>
+<hr>
+<h2 id="_15">十二、最后结论<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<p>LogicFP 最完整、最诚实的失败总结，其实不用写很长。</p>
+<p>一句话就够：</p>
+<blockquote>
+<p><strong>我没有在项目起点正确预估这条路线的复杂度。</strong></p>
+</blockquote>
+<p>于是后面的所有“合理补充”，都慢慢变成了复杂度累计；<br>
+所有“看起来正确的设计”，都慢慢把项目推向更难收敛的位置。</p>
+<p>最后它不是死在某个 bug、某个模块、某个错误决定上。<br>
+它是死在一开始对复杂度判断失真。</p>
+<p>这也是我现在最重视的一件事：</p>
+<p><strong>在一个方向看起来很对之前，先判断它到底会长成一个工具，还是会长成一个系统。</strong></p>
+<p>因为这两者的代价，不是一个量级。</p>
+    </div>
+
+    <footer class="article-footer">
+    </footer>
+</article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-brand">
+                <p class="footer-copyright">&copy; 2026 我的博客。保留所有权利。</p>
+                <p class="footer-powered">使用 Pelican 驱动</p>
+            </div>
+            <nav class="footer-nav" aria-label="页脚导航">
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a>
+            </nav>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="返回顶部" title="返回顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+
+        var html = document.documentElement;
+        var themeBtn = document.querySelector('.theme-toggle');
+        function setTheme(mode) {
+            html.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+        }
+        var saved = localStorage.getItem('theme');
+        if (saved) { setTheme(saved); }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                var cur = html.getAttribute('data-theme');
+                setTheme(cur === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        var topBtn = document.querySelector('.back-to-top');
+        if (topBtn) {
+            window.addEventListener('scroll', function() {
+                topBtn.classList.toggle('visible', window.scrollY > 400);
+            });
+            topBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
