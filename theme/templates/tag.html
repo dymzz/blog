@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}标签「{{ tag }}」- {{ SITENAME }}{% endblock %}
+{% block description %}标签「{{ tag }}」下的所有文章 - {{ SITENAME }}{% endblock %}
+{% block og_title %}标签「{{ tag }}」- {{ SITENAME }}{% endblock %}
+{% block og_description %}标签「{{ tag }}」下的所有文章 - {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<section class="tag-detail">
+    <h1>标签：{{ tag }}</h1>
+    <p>共 {{ articles|count }} 篇文章</p>
+    <ul class="post-list">
+        {% for article in articles %}
+        <li class="post-card">
+            <article>
+                <h2><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
+                <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%Y年%m月%d日') }}</time>
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ SITEURL }}/tags.html" class="btn btn-back">返回所有标签</a>
+</section>
+{% endblock %}

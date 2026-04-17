@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}归档 - {{ SITENAME }}{% endblock %}
+{% block description %}按时间归档所有文章 - {{ SITENAME }}{% endblock %}
+{% block og_title %}归档 - {{ SITENAME }}{% endblock %}
+{% block og_description %}按时间归档所有文章 - {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<section class="archives-page">
+    <h1>归档</h1>
+    <p>按时间浏览所有文章</p>
+    {% for year, year_articles in dates|groupby('date.year')|reverse %}
+    <h2>{{ year }}年</h2>
+    <ul class="archive-list">
+        {% for article in year_articles %}
+        <li>
+            <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%m月%d日') }}</time>
+            <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</section>
+{% endblock %}

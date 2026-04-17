@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block head %}
+    <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
+    {% endblock %}
+    <meta name="description" content="{% block description %}{{ SITEDESCRIPTION }}{% endblock %}">
+    {% if page_url %}
+    <link rel="canonical" href="{{ SITEURL }}/{{ page_url }}">
+    {% endif %}
+    {% block opengraph %}
+    <meta property="og:title" content="{% block og_title %}{{ SITENAME }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ SITEDESCRIPTION }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:locale" content="zh_CN">
+    {% endblock %}
+    <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="{{ SITEURL }}/">{{ SITENAME }}</a>
+                {% if SITE_SUBTITLE %}
+                <span class="site-subtitle">{{ SITE_SUBTITLE }}</span>
+                {% endif %}
+            </div>
+            <nav class="site-nav" aria-label="主导航">
+                <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                    <span class="nav-toggle-icon"></span>
+                </button>
+                <ul class="nav-list">
+                {% for name, url in MENUITEMS %}
+                    <li><a href="{{ SITEURL }}{{ url }}">{{ name }}</a></li>
+                {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+        {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 {{ SITENAME }}。保留所有权利。</p>
+            <nav class="footer-nav" aria-label="页脚导航">
+            {% for name, url in MENUITEMS %}
+                <a href="{{ SITEURL }}{{ url }}">{{ name }}</a>
+            {% endfor %}
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+    })();
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

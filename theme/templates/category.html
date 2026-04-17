@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}分类「{{ category }}」- {{ SITENAME }}{% endblock %}
+{% block description %}分类「{{ category }}」下的所有文章 - {{ SITENAME }}{% endblock %}
+{% block og_title %}分类「{{ category }}」- {{ SITENAME }}{% endblock %}
+{% block og_description %}分类「{{ category }}」下的所有文章 - {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<section class="category-detail">
+    <h1>分类：{{ category }}</h1>
+    <ul class="post-list">
+        {% for article in articles %}
+        <li class="post-card">
+            <article>
+                <h2><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h2>
+                <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%Y年%m月%d日') }}</time>
+            </article>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

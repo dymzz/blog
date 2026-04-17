@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}标签 - {{ SITENAME }}{% endblock %}
+{% block description %}所有标签分类 - {{ SITENAME }}{% endblock %}
+{% block og_title %}标签 - {{ SITENAME }}{% endblock %}
+{% block og_description %}所有标签分类 - {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<section class="tags-page">
+    <h1>标签</h1>
+    <p>按标签浏览文章</p>
+    <ul class="tag-cloud">
+        {% for tag, articles in tags|sort %}
+        <li class="tag-item">
+            <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+            <span class="tag-count">({{ articles|count }})</span>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

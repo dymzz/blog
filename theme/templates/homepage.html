@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <h1>{{ SITENAME }}</h1>
+    {% if SITE_SUBTITLE %}
+    <p>{{ SITE_SUBTITLE }}</p>
+    {% endif %}
+</section>
+
+{% if articles %}
+<section class="recent-posts">
+    <h2>最新文章</h2>
+    {% for article in articles[:5] %}
+    <article class="post-card">
+        <h3><a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
+        <time datetime="{{ article.date.isoformat() }}">{{ article.date.strftime('%Y年%m月%d日') }}</time>
+        {% if article.summary %}
+        <p>{{ article.summary }}</p>
+        {% endif %}
+    </article>
+    {% endfor %}
+    <p><a href="{{ SITEURL }}/blog/" class="btn btn-primary">查看全部文章</a></p>
+</section>
+{% else %}
+<p class="empty-state">暂无文章</p>
+{% endif %}
+{% endblock %}

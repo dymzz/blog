@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的博客</title>
+    <meta name="description" content="一个关于技术与生活的个人博客">
+    <meta property="og:title" content="我的博客">
+    <meta property="og:description" content="一个关于技术与生活的个人博客">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="../theme/css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="../">我的博客</a>
+                <span class="site-subtitle">记录技术与生活</span>
+            </div>
+            <nav class="site-nav" aria-label="主导航">
+                <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                    <span class="nav-toggle-icon"></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="../">首页</a></li>
+                    <li><a href="../blog/">博客</a></li>
+                    <li><a href="../tags.html">标签</a></li>
+                    <li><a href="../archives.html">归档</a></li>
+                    <li><a href="../pages/projects.html">项目</a></li>
+                    <li><a href="../pages/about.html">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+<section class="hero">
+    <h1>我的博客</h1>
+    <p>记录技术与生活</p>
+</section>
+
+<section class="recent-posts">
+    <h2>最新文章</h2>
+    <ul class="post-list">
+        <li class="post-card">
+            <article>
+                <h3><a href="../posts/huan-ying-lai-dao-wo-de-bo-ke.html">欢迎来到我的博客</a></h3>
+                <time datetime="2026-04-17T00:00:00+08:00">2026年04月17日</time>
+                <p><p>这是第一篇博客文章，欢迎来到我的个人博客。</p></p>
+                <footer class="post-card-meta">
+                    <span class="post-tags">
+                        <a href="../tag/ru-men.html">入门</a>
+                        <a href="../tag/bo-ke.html">博客</a>
+                    </span>
+                </footer>
+            </article>
+        </li>
+        <li class="post-card">
+            <article>
+                <h3><a href="../posts/python-zhuang-shi-qi-ru-men.html">Python 装饰器入门</a></h3>
+                <time datetime="2026-04-10T00:00:00+08:00">2026年04月10日</time>
+                <p><p>从零开始理解 Python 装饰器的原理与用法。</p></p>
+                <footer class="post-card-meta">
+                    <span class="post-tags">
+                        <a href="../tag/python.html">Python</a>
+                        <a href="../tag/zhuang-shi-qi.html">装饰器</a>
+                        <a href="../tag/bian-cheng.html">编程</a>
+                    </span>
+                </footer>
+            </article>
+        </li>
+    </ul>
+    <a href="../blog/" class="btn btn-primary">查看全部文章</a>
+</section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 我的博客。保留所有权利。</p>
+            <nav class="footer-nav" aria-label="页脚导航">
+                <a href="../">首页</a>
+                <a href="../blog/">博客</a>
+                <a href="../tags.html">标签</a>
+                <a href="../archives.html">归档</a>
+                <a href="../pages/projects.html">项目</a>
+                <a href="../pages/about.html">关于</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

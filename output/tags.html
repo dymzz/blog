@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签 - 我的博客</title>
+    <meta name="description" content="所有标签分类 - 我的博客">
+    <meta property="og:title" content="标签 - 我的博客">
+    <meta property="og:description" content="所有标签分类 - 我的博客">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="./theme/css/main.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="./">我的博客</a>
+                <span class="site-subtitle">记录技术与生活</span>
+            </div>
+            <nav class="site-nav" aria-label="主导航">
+                <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                    <span class="nav-toggle-icon"></span>
+                </button>
+                <ul class="nav-list">
+                    <li><a href="./">首页</a></li>
+                    <li><a href="./blog/">博客</a></li>
+                    <li><a href="./tags.html">标签</a></li>
+                    <li><a href="./archives.html">归档</a></li>
+                    <li><a href="./pages/projects.html">项目</a></li>
+                    <li><a href="./pages/about.html">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+<section class="tags-page">
+    <h1>标签</h1>
+    <p>按标签浏览文章</p>
+    <ul class="tag-cloud">
+        <li class="tag-item">
+            <a href="./tag/bian-cheng.html">编程</a>
+            <span class="tag-count">(1)</span>
+        </li>
+        <li class="tag-item">
+            <a href="./tag/bo-ke.html">博客</a>
+            <span class="tag-count">(1)</span>
+        </li>
+        <li class="tag-item">
+            <a href="./tag/python.html">Python</a>
+            <span class="tag-count">(1)</span>
+        </li>
+        <li class="tag-item">
+            <a href="./tag/ru-men.html">入门</a>
+            <span class="tag-count">(1)</span>
+        </li>
+        <li class="tag-item">
+            <a href="./tag/zhuang-shi-qi.html">装饰器</a>
+            <span class="tag-count">(1)</span>
+        </li>
+    </ul>
+</section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 我的博客。保留所有权利。</p>
+            <nav class="footer-nav" aria-label="页脚导航">
+                <a href="./">首页</a>
+                <a href="./blog/">博客</a>
+                <a href="./tags.html">标签</a>
+                <a href="./archives.html">归档</a>
+                <a href="./pages/projects.html">项目</a>
+                <a href="./pages/about.html">关于</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+    })();
+    </script>
+</body>
+</html>
