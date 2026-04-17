@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教程：从零搭建个人博客并部署上线 - 我的博客</title>
+    <meta name="description" content="一、环境准备¶ 1.1 安装 Python¶ 确保已安装 Python 3.10+，推荐使用 uv 或 pyenv 管理版本： python --version 1.2 创建项目目录¶ mkdir blog && cd blog 1.3 初始化项目 …">
+    <meta property="og:title" content="教程：从零搭建个人博客并部署上线 - 我的博客">
+    <meta property="og:description" content="一、环境准备¶ 1.1 安装 Python¶ 确保已安装 Python 3.10+，推荐使用 uv 或 pyenv 管理版本： python --version 1.2 创建项目目录¶ mkdir blog && cd blog 1.3 初始化项目 …">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="https://dymzz.github.io/blog/theme/css/main.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳到主要内容</a>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="https://dymzz.github.io/blog/" class="brand-link">
+                    <span class="brand-icon" aria-hidden="true">&#9998;</span>
+                    <span class="brand-text">我的博客</span>
+                </a>
+                <span class="site-subtitle">记录技术与生活</span>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" aria-label="切换深色模式" title="切换深色模式">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <nav class="site-nav" aria-label="主导航">
+                    <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul class="nav-list">
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="site-main">
+        <div class="container">
+<article class="page-detail">
+    <header class="page-header">
+        <h1>教程：从零搭建个人博客并部署上线</h1>
+    </header>
+    <div class="page-content">
+        <h2 id="_1">一、环境准备<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="11-python">1.1 安装 Python<a class="headerlink" href="#11-python" title="Permanent link">&para;</a></h3>
+<p>确保已安装 Python 3.10+，推荐使用 <code>uv</code> 或 <code>pyenv</code> 管理版本：</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>--version
+</code></pre></div>
+
+<h3 id="12">1.2 创建项目目录<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>blog<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>blog
+</code></pre></div>
+
+<h3 id="13">1.3 初始化项目<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>py<span class="w"> </span>init
+</code></pre></div>
+
+<p>在 <code>pyproject.toml</code> 中添加依赖：</p>
+<div class="highlight"><pre><span></span><code><span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;blog&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.14&quot;</span>
+<span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;pelican[markdown]&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;typogrify&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+
+<h3 id="14">1.4 安装依赖<a class="headerlink" href="#14" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pelican<span class="w"> </span>markdown<span class="w"> </span>typogrify
+</code></pre></div>
+
+<hr>
+<h2 id="_2">二、项目结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>blog/
+├── content/
+│   ├── pages/          # 静态页面（关于、项目等）
+│   │   ├── about.md
+│   │   └── projects.md
+│   └── posts/          # 博客文章
+│       ├── welcome.md
+│       └── python-decorator.md
+├── theme/
+│   ├── static/
+│   │   └── css/
+│   │       └── main.css
+│   └── templates/
+│       ├── base.html       # 基础布局
+│       ├── index.html      # 首页
+│       ├── blog.html       # 博客列表页
+│       ├── article.html    # 文章详情页
+│       ├── page.html        # 页面详情
+│       ├── tags.html        # 标签汇总页
+│       ├── tag.html         # 单个标签页
+│       ├── archives.html    # 归档页
+│       ├── categories.html  # 分类汇总页
+│       ├── category.html    # 单个分类页
+│       └── 404.html         # 404 页面
+├── output/              # 构建产物（自动生成）
+├── pelicanconf.py       # 开发配置
+├── publishconf.py       # 发布配置
+└── main.py              # 构建脚本
+</code></pre></div>
+
+<hr>
+<h2 id="_3">三、核心配置<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="31-pelicanconfpy">3.1 pelicanconf.py<a class="headerlink" href="#31-pelicanconfpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">SITENAME</span> <span class="o">=</span> <span class="s2">&quot;我的博客&quot;</span>
+<span class="n">SITEURL</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">PATH</span> <span class="o">=</span> <span class="s2">&quot;content&quot;</span>
+<span class="n">TIMEZONE</span> <span class="o">=</span> <span class="s2">&quot;Asia/Shanghai&quot;</span>
+<span class="n">DEFAULT_LANG</span> <span class="o">=</span> <span class="s2">&quot;zh&quot;</span>
+<span class="n">DEFAULT_LOCALE</span> <span class="o">=</span> <span class="s2">&quot;zh_CN&quot;</span>
+
+<span class="n">THEME</span> <span class="o">=</span> <span class="s2">&quot;theme&quot;</span>
+
+<span class="c1"># URL 结构</span>
+<span class="n">ARTICLE_URL</span> <span class="o">=</span> <span class="s2">&quot;posts/</span><span class="si">{slug}</span><span class="s2">.html&quot;</span>
+<span class="n">ARTICLE_SAVE_AS</span> <span class="o">=</span> <span class="s2">&quot;posts/</span><span class="si">{slug}</span><span class="s2">.html&quot;</span>
+<span class="n">PAGE_URL</span> <span class="o">=</span> <span class="s2">&quot;pages/</span><span class="si">{slug}</span><span class="s2">.html&quot;</span>
+<span class="n">PAGE_SAVE_AS</span> <span class="o">=</span> <span class="s2">&quot;pages/</span><span class="si">{slug}</span><span class="s2">.html&quot;</span>
+<span class="n">TAG_URL</span> <span class="o">=</span> <span class="s2">&quot;tag/</span><span class="si">{slug}</span><span class="s2">.html&quot;</span>
+<span class="n">TAGS_URL</span> <span class="o">=</span> <span class="s2">&quot;tags.html&quot;</span>
+<span class="n">ARCHIVES_URL</span> <span class="o">=</span> <span class="s2">&quot;archives.html&quot;</span>
+<span class="n">INDEX_SAVE_AS</span> <span class="o">=</span> <span class="s2">&quot;blog/index.html&quot;</span>
+
+<span class="c1"># 导航菜单</span>
+<span class="n">MENUITEMS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;首页&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;博客&quot;</span><span class="p">,</span> <span class="s2">&quot;/blog/&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;标签&quot;</span><span class="p">,</span> <span class="s2">&quot;/tags.html&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;归档&quot;</span><span class="p">,</span> <span class="s2">&quot;/archives.html&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;项目&quot;</span><span class="p">,</span> <span class="s2">&quot;/pages/projects.html&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;关于&quot;</span><span class="p">,</span> <span class="s2">&quot;/pages/about.html&quot;</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="c1"># SEO</span>
+<span class="n">SITEDESCRIPTION</span> <span class="o">=</span> <span class="s2">&quot;一个关于技术与生活的个人博客&quot;</span>
+</code></pre></div>
+
+<h3 id="32-publishconfpy">3.2 publishconf.py<a class="headerlink" href="#32-publishconfpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">SITEURL</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SITEURL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">RELATIVE_URLS</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">DELETE_OUTPUT_DIRECTORY</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+
+<hr>
+<h2 id="_4">四、设计文档关键要求<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>根据 <code>docs/design.md</code> 的约束，必须遵循：</p>
+<table>
+<thead>
+<tr>
+<th>要求</th>
+<th>实现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;html lang="zh-CN"&gt;</code></td>
+<td><code>base.html</code> 模板硬编码</td>
+</tr>
+<tr>
+<td>全站中文 UI</td>
+<td>导航、标题、按钮、空状态均为中文</td>
+</tr>
+<tr>
+<td>静态可用</td>
+<td>核心内容不依赖 JavaScript</td>
+</tr>
+<tr>
+<td>渐进增强</td>
+<td>仅导航折叠、深色模式用 JS 增强</td>
+</tr>
+<tr>
+<td>中文 title 格式</td>
+<td><code>页面标题 - 站点名称</code></td>
+</tr>
+<tr>
+<td>中文 description</td>
+<td>每页输出 meta description</td>
+</tr>
+<tr>
+<td>响应式</td>
+<td>360px / 390px / 768px / 1024px / 1280px</td>
+</tr>
+<tr>
+<td>文章 frontmatter</td>
+<td>至少包含 title、description、tags、date</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="_5">五、模板要点<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="51-basehtml">5.1 base.html — 统一出口<a class="headerlink" href="#51-basehtml" title="Permanent link">&para;</a></h3>
+<p>所有页面继承 <code>base.html</code>，统一输出：</p>
+<ul>
+<li><code>&lt;html lang="zh-CN"&gt;</code></li>
+<li><code>&lt;meta name="description"&gt;</code></li>
+<li>Open Graph 标签</li>
+<li>导航、页脚、CSS</li>
+</ul>
+<h3 id="52-articlehtml">5.2 article.html — 文章详情<a class="headerlink" href="#52-articlehtml" title="Permanent link">&para;</a></h3>
+<ul>
+<li>title 格式：<code>文章标题 - 站点名称</code></li>
+<li>description 优先使用文章 summary/description，回退到站点描述</li>
+<li>文章目录（TOC）</li>
+<li>上/下一篇导航</li>
+</ul>
+<h3 id="53-css">5.3 响应式 CSS<a class="headerlink" href="#53-css" title="Permanent link">&para;</a></h3>
+<ul>
+<li>使用 CSS 自定义属性实现深色模式（<code>prefers-color-scheme</code>）</li>
+<li>移动端导航折叠（纯 JS 增强，无 JS 时导航仍可用）</li>
+<li>最小支持 360px 宽度</li>
+</ul>
+<hr>
+<h2 id="_6">六、内容创作<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="61-frontmatter">6.1 文章 frontmatter 示例<a class="headerlink" href="#61-frontmatter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Title: 文章标题
+Date: 2026-04-17
+Category: 技术
+Tags: Python, 教程
+Summary: 文章摘要（用于列表展示）
+Description: 文章描述（用于 SEO meta）
+
+正文内容...
+</code></pre></div>
+
+<h3 id="62-frontmatter">6.2 页面 frontmatter 示例<a class="headerlink" href="#62-frontmatter" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Title: 关于
+Description: 关于这个博客和作者的信息。
+
+页面正文...
+</code></pre></div>
+
+<hr>
+<h2 id="_7">七、构建与预览<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 构建静态站点<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pelican<span class="w"> </span>content<span class="w"> </span>-s<span class="w"> </span>pelicanconf.py
+</code></pre></div>
+
+<h3 id="72">7.2 本地预览<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pelican<span class="w"> </span>--listen
+</code></pre></div>
+
+<p>浏览器访问 <code>http://localhost:8000</code></p>
+<h3 id="73">7.3 开发模式（自动重载）<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>pelican<span class="w"> </span>--autoreload<span class="w"> </span>--listen
+</code></pre></div>
+
+<h3 id="74">7.4 使用构建脚本<a class="headerlink" href="#74" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>main.py<span class="w"> </span>build<span class="w">     </span><span class="c1"># 构建</span>
+python<span class="w"> </span>main.py<span class="w"> </span>dev<span class="w">       </span><span class="c1"># 开发模式</span>
+python<span class="w"> </span>main.py<span class="w"> </span>publish<span class="w">   </span><span class="c1"># 生产构建</span>
+</code></pre></div>
+
+<hr>
+<h2 id="vibe-coding">八、使用 Vibe Coding 快速部署上线<a class="headerlink" href="#vibe-coding" title="Permanent link">&para;</a></h2>
+<h3 id="81-vibe-coding">8.1 什么是 Vibe Coding<a class="headerlink" href="#81-vibe-coding" title="Permanent link">&para;</a></h3>
+<p>Vibe Coding 是一种借助 AI 辅助编程的工作方式：用自然语言描述需求，AI 生成代码，人工审查和调整。本博客项目就是用这种方式在短时间内完成的。</p>
+<h3 id="82-github-pages">8.2 部署到 GitHub Pages<a class="headerlink" href="#82-github-pages" title="Permanent link">&para;</a></h3>
+<p><strong>步骤一：创建 GitHub 仓库</strong></p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>init
+git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;初始化博客项目&quot;</span>
+git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>https://github.com/你的用户名/你的用户名.github.io.git
+git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div>
+
+<p><strong>步骤二：配置 GitHub Actions 自动部署</strong></p>
+<p>在项目根目录创建 <code>.github/workflows/deploy.yml</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy Blog</span>
+
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.14&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install pelican[markdown] typogrify</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pelican content -s publishconf.py</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">peaceiris/actions-gh-pages@v4</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">github_token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
+<span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./output</span>
+</code></pre></div>
+
+<p><strong>步骤三：推送触发部署</strong></p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push
+</code></pre></div>
+
+<p>推送后 GitHub Actions 自动构建并发布到 <code>https://你的用户名.github.io</code>。</p>
+<h3 id="83-netlify">8.3 部署到 Netlify<a class="headerlink" href="#83-netlify" title="Permanent link">&para;</a></h3>
+<ol>
+<li>登录 <a href="https://netlify.com">Netlify</a></li>
+<li>选择"从 Git 导入"</li>
+<li>连接 GitHub 仓库</li>
+<li>配置构建命令：<code>pelican content -s publishconf.py</code></li>
+<li>发布目录：<code>output</code></li>
+<li>点击部署</li>
+</ol>
+<h3 id="84-vercel">8.4 部署到 Vercel<a class="headerlink" href="#84-vercel" title="Permanent link">&para;</a></h3>
+<ol>
+<li>登录 <a href="https://vercel.com">Vercel</a></li>
+<li>导入 Git 仓库</li>
+<li>构建命令：<code>pelican content -s publishconf.py</code></li>
+<li>输出目录：<code>output</code></li>
+<li>部署</li>
+</ol>
+<h3 id="85">8.5 自定义域名（可选）<a class="headerlink" href="#85" title="Permanent link">&para;</a></h3>
+<p>在 <code>pelicanconf.py</code> 或 <code>publishconf.py</code> 中设置：</p>
+<div class="highlight"><pre><span></span><code><span class="n">SITEURL</span> <span class="o">=</span> <span class="s2">&quot;https://yourdomain.com&quot;</span>
+</code></pre></div>
+
+<p>然后在域名商处将域名 CNAME 指向部署平台。</p>
+<hr>
+<h2 id="_8">九、验收检查清单<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<h3 id="91">9.1 中文化<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[x] 全站主 UI 文案默认中文</li>
+<li>[x] <code>&lt;html lang="zh-CN"&gt;</code> 所有页面生效</li>
+<li>[x] 分页、空状态、错误提示中文</li>
+</ul>
+<h3 id="92">9.2 静态可用性<a class="headerlink" href="#92" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[x] 禁用 JavaScript 后首页可访问</li>
+<li>[x] 禁用 JavaScript 后文章可阅读</li>
+<li>[x] 导航链接可用</li>
+<li>[x] 标签、归档页可访问</li>
+</ul>
+<h3 id="93-seo">9.3 SEO<a class="headerlink" href="#93-seo" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[x] 每页有中文 <code>&lt;title&gt;</code></li>
+<li>[x] 每页有 <code>&lt;meta name="description"&gt;</code></li>
+<li>[x] Open Graph 标签输出</li>
+<li>[x] 无占位文本残留</li>
+</ul>
+<h3 id="94">9.4 响应式<a class="headerlink" href="#94" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[x] 360px 可读</li>
+<li>[x] 768px 布局正常</li>
+<li>[x] 1280px 无异常</li>
+</ul>
+<hr>
+<h2 id="vibe-coding_1">十、Vibe Coding 实践总结<a class="headerlink" href="#vibe-coding_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>做什么</th>
+<th>AI 辅助</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>需求分析</td>
+<td>编写设计文档</td>
+<td>AI 帮助梳理检查项</td>
+</tr>
+<tr>
+<td>项目初始化</td>
+<td>创建结构、安装依赖</td>
+<td>AI 生成脚本和配置</td>
+</tr>
+<tr>
+<td>模板开发</td>
+<td>HTML 模板 + SEO 标签</td>
+<td>AI 生成模板代码</td>
+</tr>
+<tr>
+<td>样式开发</td>
+<td>响应式 CSS + 深色模式</td>
+<td>AI 生成样式代码</td>
+</tr>
+<tr>
+<td>内容创建</td>
+<td>文章和页面</td>
+<td>AI 生成示例内容</td>
+</tr>
+<tr>
+<td>部署上线</td>
+<td>CI/CD 配置</td>
+<td>AI 生成部署脚本</td>
+</tr>
+<tr>
+<td>验收检查</td>
+<td>逐条核对设计文档</td>
+<td>人工最终确认</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心原则：先保证中文默认输出，先保证静态可用，再增加增强交互，最后优化视觉体验。顺序不可颠倒。</strong></p>
+    </div>
+</article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-brand">
+                <p class="footer-copyright">&copy; 2026 我的博客。保留所有权利。</p>
+                <p class="footer-powered">使用 Pelican 驱动</p>
+            </div>
+            <nav class="footer-nav" aria-label="页脚导航">
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a>
+            </nav>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="返回顶部" title="返回顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+
+        var html = document.documentElement;
+        var themeBtn = document.querySelector('.theme-toggle');
+        function setTheme(mode) {
+            html.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+        }
+        var saved = localStorage.getItem('theme');
+        if (saved) { setTheme(saved); }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                var cur = html.getAttribute('data-theme');
+                setTheme(cur === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        var topBtn = document.querySelector('.back-to-top');
+        if (topBtn) {
+            window.addEventListener('scroll', function() {
+                topBtn.classList.toggle('visible', window.scrollY > 400);
+            });
+            topBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

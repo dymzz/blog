@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>我的博客 - 博客</title><link href="https://dymzz.github.io/blog/" rel="alternate"/><link href="https://dymzz.github.io/blog/feeds/bo-ke.atom.xml" rel="self"/><id>https://dymzz.github.io/blog/</id><updated>2026-04-17T00:00:00+08:00</updated><entry><title>欢迎来到我的博客</title><link href="https://dymzz.github.io/blog/posts/huan-ying-lai-dao-wo-de-bo-ke.html" rel="alternate"/><published>2026-04-17T00:00:00+08:00</published><updated>2026-04-17T00:00:00+08:00</updated><author><name/></author><id>tag:dymzz.github.io,2026-04-17:/blog/posts/huan-ying-lai-dao-wo-de-bo-ke.html</id><summary type="html">&lt;p&gt;这是第一篇博客文章，欢迎来到我的个人博客。&lt;/p&gt;</summary><content type="html">&lt;p&gt;第一篇博客文章，记录搭建这个站点的初衷。&lt;/p&gt;
+&lt;h2 id="_1"&gt;为什么写博客&lt;a class="headerlink" href="#_1" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;写博客是整理思路、记录成长的好方式。通过文字，可以将零散的知识系统化，将瞬间的灵感持久化。&lt;/p&gt;
+&lt;h2 id="_2"&gt;这个博客使用的技术&lt;a class="headerlink" href="#_2" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Pelican&lt;/strong&gt;：Python 静态站点生成器&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Markdown&lt;/strong&gt;：简洁的写作格式&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;纯 CSS&lt;/strong&gt;：无 JavaScript 依赖的核心样式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_3"&gt;未来的计划&lt;a class="headerlink" href="#_3" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;持续分享技术学习笔记&lt;/li&gt;
+&lt;li&gt;记录项目开发中的心得体会&lt;/li&gt;
+&lt;li&gt;探索有趣的编程实践&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;写作是最好的思考方式。&lt;/p&gt;
+&lt;/blockquote&gt;</content><category term="随笔"/><category term="入门"/><category term="博客"/></entry></feed>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding 实战：用 AI 搭建 Pelican 博客并一键部署 - 我的博客</title>
+    <meta name="description" content="记录一次 Vibe Coding 的完整过程，用 AI 辅助完成博客部署脚本编写和 GitHub Pages 配置。">
+    <meta property="og:title" content="Vibe Coding 实战：用 AI 搭建 Pelican 博客并一键部署 - 我的博客">
+    <meta property="og:description" content="记录一次 Vibe Coding 的完整过程，用 AI 辅助完成博客部署脚本编写和 GitHub Pages 配置。">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="https://dymzz.github.io/blog/theme/css/main.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳到主要内容</a>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="https://dymzz.github.io/blog/" class="brand-link">
+                    <span class="brand-icon" aria-hidden="true">&#9998;</span>
+                    <span class="brand-text">我的博客</span>
+                </a>
+                <span class="site-subtitle">记录技术与生活</span>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" aria-label="切换深色模式" title="切换深色模式">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <nav class="site-nav" aria-label="主导航">
+                    <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul class="nav-list">
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="site-main">
+        <div class="container">
+<article class="article-detail">
+    <header class="article-header">
+        <div class="article-header-meta">
+            <time datetime="2026-04-17T00:00:00+08:00">2026年04月17日</time>
+            <a href="https://dymzz.github.io/blog/category/ji-zhu.html" class="post-category">技术</a>
+        </div>
+        <h1 class="article-title">Vibe Coding 实战：用 AI 搭建 Pelican 博客并一键部署</h1>
+        <div class="article-tags">
+            <a href="https://dymzz.github.io/blog/tag/vibe-coding.html" class="tag">Vibe Coding</a>
+            <a href="https://dymzz.github.io/blog/tag/ai.html" class="tag">AI</a>
+            <a href="https://dymzz.github.io/blog/tag/pelican.html" class="tag">Pelican</a>
+            <a href="https://dymzz.github.io/blog/tag/github-pages.html" class="tag">GitHub Pages</a>
+            <a href="https://dymzz.github.io/blog/tag/zi-dong-hua.html" class="tag">自动化</a>
+        </div>
+    </header>
+
+
+    <div class="article-content">
+        <p>Vibe Coding 是一种以自然语言驱动的编程方式——你只需描述意图，AI 负责生成代码。本文记录一次真实的 Vibe Coding 过程：为 Pelican 博客编写一键部署脚本并完成 GitHub Pages 配置。</p>
+<h2 id="_1">起因<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>Pelican 博客项目已经搭好，内容也有了，但每次发布都要手动执行构建、切换分支、推送文件，流程繁琐。目标是：<strong>一行命令完成部署</strong>。</p>
+<h2 id="_2">第一步：描述需求<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>我向 AI 说了一句：</p>
+<blockquote>
+<p>快速部署脚本</p>
+</blockquote>
+<p>就这么简单。AI 开始自动分析项目结构。</p>
+<h2 id="ai">第二步：AI 主动理解上下文<a class="headerlink" href="#ai" title="Permanent link">&para;</a></h2>
+<p>AI 做了以下事情：</p>
+<ol>
+<li><strong>读取项目目录</strong>——发现这是 Pelican 博客项目</li>
+<li><strong>读取配置文件</strong>——<code>pelicanconf.py</code>、<code>publishconf.py</code>、<code>pyproject.toml</code></li>
+<li><strong>理解构建方式</strong>——Pelican 使用 <code>pelican</code> 命令生成静态站点，<code>publishconf.py</code> 用于生产环境</li>
+</ol>
+<p>这一步没有任何人工指导，AI 通过文件内容自行推断。</p>
+<h2 id="ai_1">第三步：AI 询问关键决策<a class="headerlink" href="#ai_1" title="Permanent link">&para;</a></h2>
+<p>AI 发现部署目标不唯一，主动提问：</p>
+<div class="highlight"><pre><span></span><code>你想部署到哪个平台？
+- GitHub Pages
+- VPS/服务器
+- 仅本地生成
+</code></pre></div>
+
+<p>我选择了 <strong>GitHub Pages</strong>。这是 Vibe Coding 的核心模式：<strong>AI 负责细节，人负责决策</strong>。</p>
+<h2 id="_3">第四步：生成部署脚本<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>AI 生成了 <code>deploy.sh</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="nv">SCRIPT_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>dirname<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="si">}</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+<span class="nv">OUTPUT_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">/output&quot;</span>
+<span class="nv">BRANCH</span><span class="o">=</span><span class="s2">&quot;gh-pages&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; 安装依赖...&quot;</span>
+pip<span class="w"> </span>install<span class="w"> </span>pelican<span class="w"> </span>markdown
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; 生成静态站点...&quot;</span>
+pelican<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">/content&quot;</span><span class="w"> </span>-o<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">/publishconf.py&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; 部署到 GitHub Pages (</span><span class="nv">$BRANCH</span><span class="s2">)...&quot;</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">/.git&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>init
+<span class="k">fi</span>
+
+git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>checkout<span class="w"> </span>--orphan<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BRANCH</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>checkout<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BRANCH</span><span class="s2">&quot;</span>
+git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>add<span class="w"> </span>-A
+git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Deploy: </span><span class="k">$(</span>date<span class="w"> </span>+%Y-%m-%d<span class="w"> </span>%H:%M:%S<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>--allow-empty
+
+<span class="nv">REMOTE_URL</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SCRIPT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>remote<span class="w"> </span>get-url<span class="w"> </span>origin<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="k">)</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REMOTE_URL</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span>git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REMOTE_URL</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="o">||</span><span class="w"> </span>git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$REMOTE_URL</span><span class="s2">&quot;</span>
+<span class="w">    </span>git<span class="w"> </span>-C<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$OUTPUT_DIR</span><span class="s2">&quot;</span><span class="w"> </span>push<span class="w"> </span>-f<span class="w"> </span>origin<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$BRANCH</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; 部署完成！&quot;</span>
+<span class="k">else</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;==&gt; 未检测到 remote origin，请手动推送 output 目录到 </span><span class="nv">$BRANCH</span><span class="s2"> 分支&quot;</span>
+<span class="k">fi</span>
+</code></pre></div>
+
+<p>脚本逻辑清晰：</p>
+<ol>
+<li>安装 Pelican 依赖</li>
+<li>用 <code>publishconf.py</code> 生成生产环境站点</li>
+<li>在 <code>output/</code> 目录初始化 Git，提交到 <code>gh-pages</code> 分支</li>
+<li>自动检测远程仓库并推送</li>
+</ol>
+<h2 id="_4">第五步：追问配置细节<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>我继续问 GitHub Pages 还需要配置什么，AI 回答了三个步骤：</p>
+<ol>
+<li><strong>Source</strong>: <code>Deploy from a branch</code></li>
+<li><strong>Branch</strong>: <code>gh-pages</code>，目录 <code>/ (root)</code></li>
+<li>点 <strong>Save</strong></li>
+</ol>
+<p>当遇到 "Add a verified domain" 步骤时，AI 明确告知这是<strong>可选的</strong>：</p>
+<ul>
+<li>不配自定义域名 → 直接用 <code>github.io</code> 地址</li>
+<li>要配自定义域名 → 填域名 + CNAME 记录 + 开启 HTTPS</li>
+</ul>
+<h2 id="_5">第六步：生成文章记录过程<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>最后，我让 AI 把整个过程写成一篇博客文章。就是你正在读的这篇。</p>
+<h2 id="vibe-coding">Vibe Coding 的体会<a class="headerlink" href="#vibe-coding" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>传统编程</th>
+<th>Vibe Coding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自己写每一行代码</td>
+<td>描述意图，AI 生成代码</td>
+</tr>
+<tr>
+<td>手动查阅文档</td>
+<td>AI 自动读取项目文件</td>
+</tr>
+<tr>
+<td>反复试错</td>
+<td>AI 一次生成可用方案</td>
+</tr>
+<tr>
+<td>自己找配置方法</td>
+<td>AI 主动告知注意事项</td>
+</tr>
+</tbody>
+</table>
+<p><strong>核心理念</strong>：人提供方向和决策，AI 处理实现细节。你不需要知道 <code>checkout --orphan</code> 的语法，只需要说"部署到 GitHub Pages"。</p>
+<blockquote>
+<p>未来的编程不是写代码，而是写意图。</p>
+</blockquote>
+    </div>
+
+    <footer class="article-footer">
+    </footer>
+</article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-brand">
+                <p class="footer-copyright">&copy; 2026 我的博客。保留所有权利。</p>
+                <p class="footer-powered">使用 Pelican 驱动</p>
+            </div>
+            <nav class="footer-nav" aria-label="页脚导航">
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a>
+            </nav>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="返回顶部" title="返回顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+
+        var html = document.documentElement;
+        var themeBtn = document.querySelector('.theme-toggle');
+        function setTheme(mode) {
+            html.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+        }
+        var saved = localStorage.getItem('theme');
+        if (saved) { setTheme(saved); }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                var cur = html.getAttribute('data-theme');
+                setTheme(cur === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        var topBtn = document.querySelector('.back-to-top');
+        if (topBtn) {
+            window.addEventListener('scroll', function() {
+                topBtn.classList.toggle('visible', window.scrollY > 400);
+            });
+            topBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

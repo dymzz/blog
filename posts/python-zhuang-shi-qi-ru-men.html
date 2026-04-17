@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 装饰器入门 - 我的博客</title>
+    <meta name="description" content="从零开始理解 Python 装饰器的原理与用法。">
+    <meta property="og:title" content="Python 装饰器入门 - 我的博客">
+    <meta property="og:description" content="从零开始理解 Python 装饰器的原理与用法。">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_CN">
+    <link rel="stylesheet" href="https://dymzz.github.io/blog/theme/css/main.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">跳到主要内容</a>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="site-brand">
+                <a href="https://dymzz.github.io/blog/" class="brand-link">
+                    <span class="brand-icon" aria-hidden="true">&#9998;</span>
+                    <span class="brand-text">我的博客</span>
+                </a>
+                <span class="site-subtitle">记录技术与生活</span>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" aria-label="切换深色模式" title="切换深色模式">
+                    <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <nav class="site-nav" aria-label="主导航">
+                    <button class="nav-toggle" aria-label="切换导航" aria-expanded="false">
+                        <span class="nav-toggle-icon"></span>
+                    </button>
+                    <ul class="nav-list">
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a></li>
+                        <li><a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="site-main">
+        <div class="container">
+<article class="article-detail">
+    <header class="article-header">
+        <div class="article-header-meta">
+            <time datetime="2026-04-10T00:00:00+08:00">2026年04月10日</time>
+            <a href="https://dymzz.github.io/blog/category/ji-zhu.html" class="post-category">技术</a>
+        </div>
+        <h1 class="article-title">Python 装饰器入门</h1>
+        <div class="article-tags">
+            <a href="https://dymzz.github.io/blog/tag/python.html" class="tag">Python</a>
+            <a href="https://dymzz.github.io/blog/tag/zhuang-shi-qi.html" class="tag">装饰器</a>
+            <a href="https://dymzz.github.io/blog/tag/bian-cheng.html" class="tag">编程</a>
+        </div>
+    </header>
+
+
+    <div class="article-content">
+        <p>Python 装饰器是日常开发中非常实用的语法特性。本文从基础概念出发，逐步理解装饰器的工作方式。</p>
+<h2 id="_1">什么是装饰器<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>装饰器本质上是一个函数，它接受一个函数作为参数，返回一个新的函数。通过 <code>@</code> 语法，可以简洁地为现有函数添加额外功能。</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;函数调用前&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;函数调用后&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+<span class="nd">@my_decorator</span>
+<span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;你好，</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">！&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="_2">常见用途<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>日志记录</li>
+<li>权限验证</li>
+<li>缓存</li>
+<li>性能计时</li>
+</ul>
+<h2 id="_3">带参数的装饰器<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">times</span><span class="p">):</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+    <span class="k">return</span> <span class="n">decorator</span>
+
+<span class="nd">@repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;你好，</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">！&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>装饰器让代码更加优雅和可维护，值得在日常开发中多加运用。</p>
+    </div>
+
+    <footer class="article-footer">
+    </footer>
+</article>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-brand">
+                <p class="footer-copyright">&copy; 2026 我的博客。保留所有权利。</p>
+                <p class="footer-powered">使用 Pelican 驱动</p>
+            </div>
+            <nav class="footer-nav" aria-label="页脚导航">
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/">首页</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/blog/">博客</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/tags.html">标签</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/archives.html">归档</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/projects.html">项目</a>
+                <a href="https://dymzz.github.io/bloghttps://dymzz.github.io/blog/pages/about.html">关于</a>
+            </nav>
+        </div>
+    </footer>
+
+    <button class="back-to-top" aria-label="返回顶部" title="返回顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script>
+    (function() {
+        var toggle = document.querySelector('.nav-toggle');
+        var nav = document.querySelector('.nav-list');
+        if (toggle && nav) {
+            toggle.addEventListener('click', function() {
+                var expanded = toggle.getAttribute('aria-expanded') === 'true';
+                toggle.setAttribute('aria-expanded', !expanded);
+                nav.classList.toggle('nav-open');
+            });
+        }
+
+        var html = document.documentElement;
+        var themeBtn = document.querySelector('.theme-toggle');
+        function setTheme(mode) {
+            html.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+        }
+        var saved = localStorage.getItem('theme');
+        if (saved) { setTheme(saved); }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                var cur = html.getAttribute('data-theme');
+                setTheme(cur === 'dark' ? 'light' : 'dark');
+            });
+        }
+
+        var topBtn = document.querySelector('.back-to-top');
+        if (topBtn) {
+            window.addEventListener('scroll', function() {
+                topBtn.classList.toggle('visible', window.scrollY > 400);
+            });
+            topBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    })();
+    </script>
+</body>
+</html>

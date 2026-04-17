@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>我的博客 - 自动化</title><link href="https://dymzz.github.io/blog/" rel="alternate"/><link href="https://dymzz.github.io/blog/feeds/zi-dong-hua.atom.xml" rel="self"/><id>https://dymzz.github.io/blog/</id><updated>2026-04-17T00:00:00+08:00</updated><entry><title>Vibe Coding 实战：用 AI 搭建 Pelican 博客并一键部署</title><link href="https://dymzz.github.io/blog/posts/vibe-coding-shi-zhan-yong-ai-da-jian-pelican-bo-ke-bing-yi-jian-bu-shu.html" rel="alternate"/><published>2026-04-17T00:00:00+08:00</published><updated>2026-04-17T00:00:00+08:00</updated><author><name/></author><id>tag:dymzz.github.io,2026-04-17:/blog/posts/vibe-coding-shi-zhan-yong-ai-da-jian-pelican-bo-ke-bing-yi-jian-bu-shu.html</id><summary type="html">&lt;p&gt;记录一次 Vibe Coding 的完整过程，用 AI 辅助完成博客部署脚本编写和 GitHub Pages 配置。&lt;/p&gt;</summary><content type="html">&lt;p&gt;Vibe Coding 是一种以自然语言驱动的编程方式——你只需描述意图，AI 负责生成代码。本文记录一次真实的 Vibe Coding 过程：为 Pelican 博客编写一键部署脚本并完成 GitHub Pages 配置。&lt;/p&gt;
+&lt;h2 id="_1"&gt;起因&lt;a class="headerlink" href="#_1" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Pelican 博客项目已经搭好，内容也有了，但每次发布都要手动执行构建、切换分支、推送文件，流程繁琐。目标是：&lt;strong&gt;一行命令完成部署&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id="_2"&gt;第一步：描述需求&lt;a class="headerlink" href="#_2" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;我向 AI 说了一句：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;快速部署脚本&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;就这么简单。AI 开始自动分析项目结构。&lt;/p&gt;
+&lt;h2 id="ai"&gt;第二步：AI 主动理解上下文&lt;a class="headerlink" href="#ai" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;AI 做了以下事情：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;读取项目目录&lt;/strong&gt;——发现这是 Pelican 博客项目&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;读取配置文件&lt;/strong&gt;——&lt;code&gt;pelicanconf.py&lt;/code&gt;、&lt;code&gt;publishconf.py&lt;/code&gt;、&lt;code&gt;pyproject.toml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;理解构建方式&lt;/strong&gt;——Pelican 使用 &lt;code&gt;pelican&lt;/code&gt; 命令生成静态站点，&lt;code&gt;publishconf.py&lt;/code&gt; 用于生产环境&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这一步没有任何人工指导，AI 通过文件内容自行推断。&lt;/p&gt;
+&lt;h2 id="ai_1"&gt;第三步：AI 询问关键决策&lt;a class="headerlink" href="#ai_1" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;AI 发现部署目标不唯一，主动提问：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;你想部署到哪个平台？
+- GitHub Pages
+- VPS/服务器
+- 仅本地生成
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;我选择了 &lt;strong&gt;GitHub Pages&lt;/strong&gt;。这是 Vibe Coding 的核心模式：&lt;strong&gt;AI 负责细节，人负责决策&lt;/strong&gt;。&lt;/p&gt;
+&lt;h2 id="_3"&gt;第四步：生成部署脚本&lt;a class="headerlink" href="#_3" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;AI 生成了 &lt;code&gt;deploy.sh&lt;/code&gt;：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/usr/bin/env bash&lt;/span&gt;
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-euo&lt;span class="w"&gt; &lt;/span&gt;pipefail
+
+&lt;span class="nv"&gt;SCRIPT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dirname&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;BASH_SOURCE&lt;/span&gt;&lt;span class="p"&gt;[0]&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;OUTPUT_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$SCRIPT_DIR&lt;/span&gt;&lt;span class="s2"&gt;/output&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;BRANCH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;gh-pages&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;==&amp;gt; 安装依赖...&amp;quot;&lt;/span&gt;
+pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;pelican&lt;span class="w"&gt; &lt;/span&gt;markdown
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;==&amp;gt; 生成静态站点...&amp;quot;&lt;/span&gt;
+pelican&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$SCRIPT_DIR&lt;/span&gt;&lt;span class="s2"&gt;/content&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$SCRIPT_DIR&lt;/span&gt;&lt;span class="s2"&gt;/publishconf.py&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;==&amp;gt; 部署到 GitHub Pages (&lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt;)...&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;!&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;/.git&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;init
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;--orphan&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;/dev/null&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;-A
+git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;commit&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Deploy: &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;date&lt;span class="w"&gt; &lt;/span&gt;+%Y-%m-%d&lt;span class="w"&gt; &lt;/span&gt;%H:%M:%S&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;--allow-empty
+
+&lt;span class="nv"&gt;REMOTE_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$SCRIPT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;remote&lt;span class="w"&gt; &lt;/span&gt;get-url&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;/dev/null&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_URL&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;remote&lt;span class="w"&gt; &lt;/span&gt;add&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_URL&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;/dev/null&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;remote&lt;span class="w"&gt; &lt;/span&gt;set-url&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$REMOTE_URL&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;-C&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$OUTPUT_DIR&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;push&lt;span class="w"&gt; &lt;/span&gt;-f&lt;span class="w"&gt; &lt;/span&gt;origin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;==&amp;gt; 部署完成！&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;==&amp;gt; 未检测到 remote origin，请手动推送 output 目录到 &lt;/span&gt;&lt;span class="nv"&gt;$BRANCH&lt;/span&gt;&lt;span class="s2"&gt; 分支&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;脚本逻辑清晰：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;安装 Pelican 依赖&lt;/li&gt;
+&lt;li&gt;用 &lt;code&gt;publishconf.py&lt;/code&gt; 生成生产环境站点&lt;/li&gt;
+&lt;li&gt;在 &lt;code&gt;output/&lt;/code&gt; 目录初始化 Git，提交到 &lt;code&gt;gh-pages&lt;/code&gt; 分支&lt;/li&gt;
+&lt;li&gt;自动检测远程仓库并推送&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="_4"&gt;第五步：追问配置细节&lt;a class="headerlink" href="#_4" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;我继续问 GitHub Pages 还需要配置什么，AI 回答了三个步骤：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Source&lt;/strong&gt;: &lt;code&gt;Deploy from a branch&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Branch&lt;/strong&gt;: &lt;code&gt;gh-pages&lt;/code&gt;，目录 &lt;code&gt;/ (root)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;点 &lt;strong&gt;Save&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;当遇到 "Add a verified domain" 步骤时，AI 明确告知这是&lt;strong&gt;可选的&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不配自定义域名 → 直接用 &lt;code&gt;github.io&lt;/code&gt; 地址&lt;/li&gt;
+&lt;li&gt;要配自定义域名 → 填域名 + CNAME 记录 + 开启 HTTPS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="_5"&gt;第六步：生成文章记录过程&lt;a class="headerlink" href="#_5" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;最后，我让 AI 把整个过程写成一篇博客文章。就是你正在读的这篇。&lt;/p&gt;
+&lt;h2 id="vibe-coding"&gt;Vibe Coding 的体会&lt;a class="headerlink" href="#vibe-coding" title="Permanent link"&gt;&amp;para;&lt;/a&gt;&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;传统编程&lt;/th&gt;
+&lt;th&gt;Vibe Coding&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;自己写每一行代码&lt;/td&gt;
+&lt;td&gt;描述意图，AI 生成代码&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;手动查阅文档&lt;/td&gt;
+&lt;td&gt;AI 自动读取项目文件&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;反复试错&lt;/td&gt;
+&lt;td&gt;AI 一次生成可用方案&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;自己找配置方法&lt;/td&gt;
+&lt;td&gt;AI 主动告知注意事项&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;核心理念&lt;/strong&gt;：人提供方向和决策，AI 处理实现细节。你不需要知道 &lt;code&gt;checkout --orphan&lt;/code&gt; 的语法，只需要说"部署到 GitHub Pages"。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;未来的编程不是写代码，而是写意图。&lt;/p&gt;
+&lt;/blockquote&gt;</content><category term="技术"/><category term="Vibe Coding"/><category term="AI"/><category term="Pelican"/><category term="GitHub Pages"/><category term="自动化"/></entry></feed>
